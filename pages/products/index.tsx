@@ -6,6 +6,7 @@ import { Filters } from "../../features/product/components/filters";
 import { BsChevronRight } from "react-icons/bs";
 
 import styled from "styled-components";
+import { Layout } from "../../features/ui/layout";
 
 const Main = styled.div`
   display: flex;
@@ -17,7 +18,11 @@ const Head = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 3.1rem 0;
+
+  background: url("/bg.jpg") no-repeat center;
+  filter: brightness(0.5);
+  background-size: cover;
+  height: 500px;
 `;
 
 const Title = styled.h2`
@@ -71,17 +76,20 @@ const ProductPage: NextPage = () => {
   return (
     <>
       <Head>
-        <Title>Shop</Title>
+        <h2>SHOP</h2>
+        {/* <Title>Shop</Title>
         <Location>
           <span>Home</span>
           <BsChevronRight size={"1.7rem"} color="#BDBDBD" />
           <span>Shop</span>
-        </Location>
+        </Location> */}
       </Head>
-      <Main>
-        <Filters />
-        <ProductList />
-      </Main>
+      <Layout>
+        <Main>
+          <Filters />
+          <ProductList />
+        </Main>
+      </Layout>
     </>
   );
 };

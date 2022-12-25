@@ -30,11 +30,9 @@ export function PageContainer({ children }: PageContainerProps) {
       <Banner />
       <Header />
 
-      <Layout>
-        <div>{children}</div>
+      <div>{children}</div>
 
-        {/* <Footer /> */}
-      </Layout>
+      {/* <Footer /> */}
     </Container>
   );
 }
