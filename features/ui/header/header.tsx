@@ -29,7 +29,7 @@ const Logo = styled.h1`
 const NavList = styled.div`
   display: flex;
   align-items: center;
-  gap: 21px;
+  gap: 30px;
 `;
 
 const ListItem = styled.div`

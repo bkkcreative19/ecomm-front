@@ -11,6 +11,12 @@ type ProductProps = {
 const ProductStyles = styled.div<Pick<ProductProps, "view">>`
   height: ${(p) => (p.view === "list" ? "215px" : "455px")};
   display: ${(p) => (p.view === "list" ? "flex" : "")};
+
+  & img {
+    width: ${(p) => p.view === "list" && "100%"};
+    height: 100%;
+    object-fit: ${(p) => p.view === "list" && "contain"};
+  }
   gap: 70px;
 `;
 const Title = styled.h3`
@@ -59,7 +65,9 @@ const Pricing = styled.div`
   }
 `;
 
-const Content = styled.div``;
+const Content = styled.div`
+  flex: 3;
+`;
 
 const Description = styled.p`
   font-weight: 300;
@@ -72,11 +80,18 @@ const Description = styled.p`
   color: #858585;
 `;
 
+const ImageContainer = styled.div`
+  flex: 1;
+`;
+
 export function Product({ product, view }: ProductProps) {
-  console.log(product);
   return (
     <ProductStyles view={view}>
-      <img src={product.imageURL} alt="product" />
+      <ImageContainer>
+        {" "}
+        <img src={product.imageURL} alt="product" />
+      </ImageContainer>
+
       <Content>
         <Title>{product.title}</Title>
         <Pricing>

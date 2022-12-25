@@ -61,17 +61,10 @@ export function Filters() {
       </InputContainer>
 
       <FilterList
-        title="Bering"
-        items={[
-          "Bering",
-          "Olivia burton",
-          "Olivia burton",
-          "Timberland",
-          "Timex",
-          "Nixon",
-        ]}
+        title="Phones"
+        items={["Bering", "Olivia burton", "Timberland", "Timex", "Nixon"]}
       />
-      <FilterList title="Cocomi" items={["Timberland", "Timex"]} />
+      <FilterList title="Video Games" items={["Timberland", "Timex"]} />
       <FilterList title="Nixon" items={["Cocomi", "Timberland"]} />
     </FilterStyles>
   );

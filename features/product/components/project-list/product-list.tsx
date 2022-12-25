@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { BsFillGridFill, BsListCheck } from "react-icons/bs";
 import { FiChevronDown } from "react-icons/fi";
 import { useState } from "react";
+import { useStore } from "../../../../store";
 
 type Props = {
   view: string;
@@ -14,7 +15,7 @@ const ProductListStyles = styled.div<Props>`
   display: grid;
   grid-template-columns: ${(p) =>
     p.view === "grid" ? "repeat(auto-fill, minmax(240px, 1fr))" : "1fr"};
-  gap: 2.5rem;
+  gap: ${(p) => (p.view === "list" ? "5.5rem" : "2.5rem")};
   width: 100%;
 `;
 
@@ -73,11 +74,11 @@ const Icon = styled.div`
   cursor: pointer;
 
   &:first-child {
-    margin: 0 15px;
+    margin: 0 6px;
   }
 `;
 const SelectContainer = styled.div`
-  padding: 11px 20px;
+  padding: 7px 20px;
   background: #f9f9f9;
   border: 1px solid #dddddd;
   border-radius: 5px;
@@ -98,6 +99,10 @@ const SelectContainer = styled.div`
 
 export function ProductList() {
   const { data: products, isLoading } = useProducts();
+  const { changeFilters, filters } = useStore();
+
+  const filteredCategory = filterCategory(filters.category, products);
+  console.log(filteredCategory);
   const [view, setView] = useState("grid");
   return (
     <Container>
@@ -117,10 +122,28 @@ export function ProductList() {
         </SelectContainer>
       </ToolBar>
       <ProductListStyles view={view}>
-        {products?.map((product: ProductTypes) => {
+        {filteredCategory?.map((product: ProductTypes) => {
           return <Product view={view} key={product.id} product={product} />;
         })}
       </ProductListStyles>
     </Container>
   );
 }
+
+const filterCategory = (filter: string, products: ProductTypes[]) => {
+  let items: ProductTypes[] = [];
+
+  if (filter === "Video Games") {
+    items = products.filter(
+      (product) => product.category === filter.toLowerCase()
+    );
+  } else if (filter === "Phones") {
+    items = products.filter(
+      (product) => product.category === filter.toLowerCase()
+    );
+  } else {
+    items = products;
+  }
+
+  return items;
+};

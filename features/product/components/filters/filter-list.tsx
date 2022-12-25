@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useStore } from "../../../../store";
 
 type FilterListProps = {
   title: string;
@@ -15,7 +16,7 @@ const Title = styled.h4`
   /* identical to box height, or 160% */
   margin: 3.2rem 0;
   letter-spacing: 0.2px;
-
+  cursor: pointer;
   /* text-color */
 
   color: #252b42;
@@ -35,9 +36,15 @@ const ListItem = styled.p`
 `;
 
 export function FilterList({ title, items }: FilterListProps) {
+  const { changeFilters, filters } = useStore();
+
+  const handleClick = () => {
+    changeFilters("category", title);
+  };
+
   return (
     <FilterListStyles>
-      <Title>{title}</Title>
+      <Title onClick={handleClick}>{title}</Title>
       {items.map((item: string) => {
         return <ListItem key={item}>{item}</ListItem>;
       })}
