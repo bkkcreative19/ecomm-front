@@ -4,6 +4,7 @@ import { ProductTypes } from "../../types/product";
 import styled from "styled-components";
 import { BsFillGridFill, BsListCheck } from "react-icons/bs";
 import { FiChevronDown } from "react-icons/fi";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { useStore } from "../../../../store";
 
@@ -98,16 +99,21 @@ const SelectContainer = styled.div`
 `;
 
 export function ProductList() {
+  const router = useRouter();
   const { data: products, isLoading } = useProducts();
-  const { changeFilters, filters } = useStore();
 
-  const filteredCategory = filterCategory(filters.category, products);
-  console.log(filteredCategory);
+  const { filters, changeSortBy, sortBy, search } = useStore();
+  const filteredProducts = filterProducts(filters.brands, products);
+  const yay = filterPrice(filters.price, filteredProducts);
+
+  const sortedProducts = sortProducts(sortBy, yay);
+  const searchedProducts = filterSearch(search, sortedProducts);
+  console.log(filters.price);
   const [view, setView] = useState("grid");
   return (
     <Container>
       <ToolBar>
-        <Results>Showing all {products?.length} results</Results>
+        <Results>Showing all {yay?.length} results</Results>
         <Views>
           Views:
           <Icon onClick={() => setView("grid")}>
@@ -117,12 +123,20 @@ export function ProductList() {
             <BsListCheck onClick={() => setView("list")} />
           </Icon>
         </Views>
-        <SelectContainer>
-          Popularity <FiChevronDown />
-        </SelectContainer>
+
+        <select
+          onChange={(e) => changeSortBy(e.target.value)}
+          name="sort"
+          id=""
+          value={sortBy}
+        >
+          <option value="low-to-high">Price: low to high </option>
+          <option value="high-to-low">Price: high to low</option>
+          <option value="hi2">hi2</option>
+        </select>
       </ToolBar>
       <ProductListStyles view={view}>
-        {filteredCategory?.map((product: ProductTypes) => {
+        {searchedProducts?.map((product: ProductTypes) => {
           return <Product view={view} key={product.id} product={product} />;
         })}
       </ProductListStyles>
@@ -130,20 +144,65 @@ export function ProductList() {
   );
 }
 
-const filterCategory = (filter: string, products: ProductTypes[]) => {
-  let items: ProductTypes[] = [];
+const filterProducts = (filter: string[], products: ProductTypes[]) => {
+  let newFilters = filter.map((filter) => filter.toLowerCase());
 
-  if (filter === "Video Games") {
-    items = products.filter(
-      (product) => product.category === filter.toLowerCase()
+  if (filter.length !== 0) {
+    let newProducts = products.filter((item) =>
+      newFilters.includes(item.category)
     );
-  } else if (filter === "Phones") {
-    items = products.filter(
-      (product) => product.category === filter.toLowerCase()
-    );
+    return newProducts;
   } else {
-    items = products;
+    return products;
+  }
+};
+
+const filterPrice = (filter: string[], products: ProductTypes[]) => {
+  let test = filter
+    .map((item) =>
+      item.split("-").map((item) => Number(item.slice(1).replaceAll(",", "")))
+    )
+    .flat();
+  console.log(test);
+  if (filter.length !== 0) {
+    let newProducts = products.filter(
+      (item) => item.price >= test[0] && item.price <= test[test.length - 1]
+    );
+    return newProducts;
+  } else {
+    return products;
+  }
+};
+
+const sortProducts = (sortBy: string, products: ProductTypes[]) => {
+  let sortedArr: ProductTypes[] = [];
+  if (products) {
+    sortedArr = [...products];
   }
 
-  return items;
+  if (sortBy === "high-to-low") {
+    sortedArr.sort((a, b) => b.price - a.price);
+  } else if (sortBy === "low-to-high") {
+    sortedArr.sort((a, b) => a.price - b.price);
+  } else {
+    return products;
+  }
+
+  return sortedArr;
+};
+
+const filterSearch = (search: string, products: ProductTypes[]) => {
+  let test;
+
+  if (search) {
+    test = products.filter((item) => {
+      return search.toLowerCase() === ""
+        ? item
+        : item.title.toLowerCase().includes(search.toLowerCase());
+    });
+  } else {
+    return products;
+  }
+
+  return test;
 };

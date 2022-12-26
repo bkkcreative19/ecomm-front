@@ -2,7 +2,7 @@ import { createGlobalStyle } from "styled-components";
 import { normalize } from "styled-normalize";
 
 export const GlobalStyle = createGlobalStyle`
-import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Oswald:wght@400;500;600;700&family=Raleway:wght@400;500;600;700&display=swap');
+
   ${normalize}
 
   * {
@@ -24,6 +24,6 @@ import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600
   }
 
   button {
-    font-family: "Poppins" sans-serif;
+    font-family: Poppins sans-serif;
   }
 `;

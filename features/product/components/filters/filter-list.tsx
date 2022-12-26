@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useStore } from "../../../../store";
+import { useRouter } from "next/router";
+import { Checkbox } from "../../../ui/checkbox/checkbox";
 
 type FilterListProps = {
   title: string;
@@ -35,19 +37,28 @@ const ListItem = styled.p`
   color: #737373;
 `;
 
-export function FilterList({ title, items }: FilterListProps) {
-  const { changeFilters, filters } = useStore();
+const Options = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
 
-  const handleClick = () => {
-    changeFilters("category", title);
+export function FilterList({ title, items }: FilterListProps) {
+  const handleClick = (item: any) => {
+    // arr.push(item);
+    // setString(arr);
   };
 
   return (
     <FilterListStyles>
-      <Title onClick={handleClick}>{title}</Title>
-      {items.map((item: string) => {
-        return <ListItem key={item}>{item}</ListItem>;
-      })}
+      <Title>{title}</Title>
+      <Options>
+        {items.map((item: string) => {
+          return (
+            <Checkbox title={title} key={item} label={item} disabled={false} />
+          );
+        })}
+      </Options>
     </FilterListStyles>
   );
 }

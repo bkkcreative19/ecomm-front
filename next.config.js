@@ -5,6 +5,9 @@ const nextConfig = {
     // Enables the styled-components SWC transform
     styledComponents: true,
   },
+  experimental: {
+    fontLoaders: [{ loader: "@next/font/google" }],
+  },
 };
 
 module.exports = nextConfig;

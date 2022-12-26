@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { FilterList } from "./filter-list";
 import { BsSearch } from "react-icons/bs";
+import { useStore } from "../../../../store";
 
 const FilterStyles = styled.div`
   width: 20%;
@@ -10,11 +11,13 @@ const FilterStyles = styled.div`
 const InputContainer = styled.div`
   border: 1px solid #dadada;
   border-radius: 5px;
-
-  padding: 1.6rem 0;
+  font-size: 1.3rem;
+  padding: 1.6rem 2rem;
   display: flex;
+
+  gap: 15px;
   align-items: center;
-  max-width: 186px;
+  justify-content: space-between;
   background: #f5f5f5;
   margin: 2.5rem 0 5.5rem 0;
 `;
@@ -23,7 +26,7 @@ const Input = styled.input`
   border: none;
   font-weight: 400;
   background: transparent;
-
+  width: 80%;
   &:focus {
     border: none;
     outline: none;
@@ -47,25 +50,30 @@ const Head = styled.h5`
   color: #252b42;
 `;
 
-const SearchIcon = styled(BsSearch)`
-  margin: 0 20px;
-`;
+const SearchIcon = styled(BsSearch)``;
 
 export function Filters() {
+  const { changeSearch } = useStore();
   return (
     <FilterStyles>
       <Head>Filter:</Head>
       <InputContainer>
         <SearchIcon size={"1.7rem"} color="#737373" />
-        <Input placeholder="Search" type="text" />
+        <Input
+          onChange={(e) => changeSearch(e.target.value)}
+          placeholder="Search"
+          type="text"
+        />
       </InputContainer>
 
       <FilterList
-        title="Phones"
+        title="Brands"
         items={["Bering", "Olivia burton", "Timberland", "Timex", "Nixon"]}
       />
-      <FilterList title="Video Games" items={["Timberland", "Timex"]} />
-      <FilterList title="Nixon" items={["Cocomi", "Timberland"]} />
+      <FilterList
+        title="Price"
+        items={["$0-$100", "$100-$300", "$300-$500", "$500-$1,000"]}
+      />
     </FilterStyles>
   );
 }
