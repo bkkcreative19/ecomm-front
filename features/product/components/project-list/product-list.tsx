@@ -19,6 +19,10 @@ const ProductListStyles = styled.div<Props>`
   grid-template-columns: ${(p) =>
     p.view === "grid" ? "repeat(auto-fill, minmax(240px, 1fr))" : "1fr"};
   gap: ${(p) => (p.view === "list" ? "5.5rem" : "2.5rem")};
+
+  @media (max-width: 750px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
   width: 100%;
 `;
 
@@ -28,6 +32,11 @@ const ToolBar = styled.div`
   justify-content: space-between;
   margin-bottom: 66px;
   margin-top: 30px;
+
+  @media (max-width: 750px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const Results = styled.p`
@@ -48,6 +57,10 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 80%;
+
+  @media (max-width: 750px) {
+    width: 100%;
+  }
 `;
 
 const Views = styled.div`
@@ -80,24 +93,8 @@ const Icon = styled.div`
     margin: 0 6px;
   }
 `;
-const SelectContainer = styled.div`
-  padding: 7px 20px;
-  background: #f9f9f9;
-  border: 1px solid #dddddd;
-  border-radius: 5px;
-  font-family: Montserrat, sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 28px;
-  /* identical to box height, or 200% */
-  display: flex;
-  place-items: center;
-  letter-spacing: 0.2px;
-  gap: 5px;
-  /* second-text-color */
-  cursor: pointer;
-  color: #737373;
+const SelectContainer = styled.select`
+  width: 191px;
 `;
 
 const LoadingContainer = styled.div`
@@ -151,7 +148,7 @@ export function ProductList() {
           </Icon>
         </Views>
 
-        <select
+        <SelectContainer
           onChange={(e) => changeSortBy(e.target.value)}
           name="sort"
           id=""
@@ -160,7 +157,7 @@ export function ProductList() {
           <option value="low-to-high">Price: low to high </option>
           <option value="high-to-low">Price: high to low</option>
           <option value="hi2">hi2</option>
-        </select>
+        </SelectContainer>
       </ToolBar>
       <ProductListStyles view={view}>
         {searchedProducts?.map((product: ProductTypes) => {

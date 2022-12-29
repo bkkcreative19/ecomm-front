@@ -12,6 +12,10 @@ const Main = styled.div`
   display: flex;
   gap: 60px;
   padding: 0 1rem;
+
+  @media (max-width: 750px) {
+    flex-direction: column;
+  }
 `;
 
 const Head = styled.div`

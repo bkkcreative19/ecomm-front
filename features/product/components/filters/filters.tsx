@@ -6,6 +6,10 @@ import { useStore } from "../../../../store";
 
 const FilterStyles = styled.div`
   width: 20%;
+
+  @media (max-width: 750px) {
+    width: 100%;
+  }
 `;
 
 const InputContainer = styled.div`

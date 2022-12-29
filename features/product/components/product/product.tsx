@@ -20,6 +20,11 @@ const ProductStyles = styled.div<Pick<ProductProps, "view">>`
     object-fit: ${(p) => p.view === "list" && "contain"};
   }
   gap: 70px;
+
+  @media (max-width: 750px) {
+    display: block;
+    height: 455px;
+  }
 `;
 const Title = styled.h3`
   margin-top: 28px;
@@ -72,7 +77,7 @@ const Content = styled.div`
   flex: 3;
 `;
 
-const Description = styled.p`
+const Description = styled.p<Pick<ProductProps, "view">>`
   font-weight: 300;
   font-size: 16px;
 
@@ -82,10 +87,19 @@ const Description = styled.p`
   letter-spacing: 0.2px;
   width: 70%;
   color: #858585;
+
+  @media (max-width: 750px) {
+    display: none;
+  }
 `;
 
 const ImageContainer = styled.div`
   flex: 1;
+
+  @media (max-width: 750px) {
+    display: flex;
+    justify-content: center;
+  }
 
   & img {
     width: 235px;
@@ -147,7 +161,9 @@ export function Product({ product, view }: ProductProps) {
           <Review> 10 Reviews</Review>
         </Rating>
         {view === "list" && (
-          <Description>{product.description.slice(0, 150)} ...</Description>
+          <Description view={view}>
+            {product.description.slice(0, 150)} ...
+          </Description>
         )}
       </Content>
     </ProductStyles>

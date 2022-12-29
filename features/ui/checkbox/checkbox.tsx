@@ -67,9 +67,6 @@ type IconContainerProps = {
 };
 
 const IconnContainer = styled.div<IconContainerProps>`
-  box-sizing: border-box;
-  height: 16px;
-  width: 16px;
   padding: 5px 4px;
   border: 1px solid #7f56d9;
   display: flex;
