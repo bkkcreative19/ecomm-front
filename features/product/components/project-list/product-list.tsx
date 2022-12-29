@@ -7,6 +7,8 @@ import { FiChevronDown } from "react-icons/fi";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useStore } from "../../../../store";
+import Skeleton from "react-loading-skeleton";
+import { ClipLoader } from "react-spinners";
 
 type Props = {
   view: string;
@@ -98,9 +100,21 @@ const SelectContainer = styled.div`
   color: #737373;
 `;
 
+const LoadingContainer = styled.div`
+  display: flex;
+  width: 100%;
+
+  & span {
+    margin: 0 auto;
+    margin-top: 5rem;
+  }
+`;
+
 export function ProductList() {
   const router = useRouter();
   const { data: products, isLoading } = useProducts();
+
+  console.log(products);
 
   const { filters, changeSortBy, sortBy, search } = useStore();
   const filteredProducts = filterProducts(filters.brands, products);
@@ -108,12 +122,25 @@ export function ProductList() {
 
   const sortedProducts = sortProducts(sortBy, yay);
   const searchedProducts = filterSearch(search, sortedProducts);
-  console.log(filters.price);
+
   const [view, setView] = useState("grid");
+
+  if (isLoading) {
+    return (
+      <LoadingContainer>
+        <ClipLoader
+          size={150}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      </LoadingContainer>
+    );
+  }
+
   return (
     <Container>
       <ToolBar>
-        <Results>Showing all {yay?.length} results</Results>
+        <Results>Showing all {searchedProducts?.length} results</Results>
         <Views>
           Views:
           <Icon onClick={() => setView("grid")}>
@@ -163,7 +190,7 @@ const filterPrice = (filter: string[], products: ProductTypes[]) => {
       item.split("-").map((item) => Number(item.slice(1).replaceAll(",", "")))
     )
     .flat();
-  console.log(test);
+
   if (filter.length !== 0) {
     let newProducts = products.filter(
       (item) => item.price >= test[0] && item.price <= test[test.length - 1]

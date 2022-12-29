@@ -7,7 +7,6 @@ import { BsChevronRight } from "react-icons/bs";
 
 import styled from "styled-components";
 import { Layout } from "../../features/ui/layout";
-import { useState } from "react";
 
 const Main = styled.div`
   display: flex;
@@ -74,9 +73,6 @@ const Location = styled.div`
 `;
 
 const ProductPage: NextPage = () => {
-  const [filters, setFilters] = useState({
-    category: "",
-  });
   return (
     <>
       <Head>

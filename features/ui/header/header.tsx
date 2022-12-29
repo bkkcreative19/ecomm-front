@@ -4,6 +4,7 @@ import { Layout } from "../layout";
 import { CiUser } from "react-icons/ci";
 import { BsSearch, BsCart } from "react-icons/bs";
 import Link from "next/link";
+import { useStore } from "../../../store";
 
 const HeaderStyles = styled.header``;
 
@@ -65,13 +66,20 @@ const SearchIcon = styled(BsSearch)`
 `;
 
 export function Header() {
+  const { cart } = useStore();
   return (
     <HeaderStyles>
       <Layout>
         <HeaderContainer>
-          <Logo>Solreck</Logo>
+          <Link href="/">
+            <Logo>Solreck</Logo>
+          </Link>
+
           <NavList>
-            <ListItem>Home</ListItem>
+            <Link href="/">
+              <ListItem>Home</ListItem>
+            </Link>
+
             <Link href="/products">
               <ListItem>Shop</ListItem>
             </Link>
@@ -84,7 +92,10 @@ export function Header() {
               <CiUser /> Login / Register
             </LoginRegister>
             <SearchIcon size={"1.7rem"} color="#B73225" />
-            <BsCart size={"1.7rem"} color="#B73225" />
+            <Link href="/cart">
+              <BsCart size={"1.7rem"} color="#B73225" />
+              {cart.length}
+            </Link>
           </Options>
         </HeaderContainer>
       </Layout>

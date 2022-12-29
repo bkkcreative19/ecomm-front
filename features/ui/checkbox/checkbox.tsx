@@ -37,7 +37,7 @@ const StyledCheckbox = styled.div<CheckboxProps>`
   }
 
   & div {
-    margin-right: 8px;
+    margin-right: 13px;
   }
 `;
 
@@ -75,6 +75,7 @@ const IconnContainer = styled.div<IconContainerProps>`
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 5px;
 
   &:hover {
     background: #f9f5ff important;
@@ -114,7 +115,7 @@ export function Checkbox({
         style={{
           height: size === "small" ? "16px" : "20px",
           width: size === "small" ? "16px" : "20px",
-          borderRadius: size === "small" ? "4px" : "6px",
+
           backgroundColor: status === "notChecked" ? "#ffffff" : "#F9F5FF",
           border:
             status === "notChecked" ? "1px solid #D0D5DD" : "1px solid #7f56d9",

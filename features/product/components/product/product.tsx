@@ -80,12 +80,18 @@ const Description = styled.p`
   /* or 144% */
   margin-top: 2.8rem;
   letter-spacing: 0.2px;
-  width: 55%;
+  width: 70%;
   color: #858585;
 `;
 
 const ImageContainer = styled.div`
   flex: 1;
+
+  & img {
+    width: 235px;
+    height: 300px;
+    object-fit: cover;
+  }
 `;
 
 const Stars = styled.div`
@@ -118,17 +124,17 @@ export function Product({ product, view }: ProductProps) {
   const handleClick = () => {
     router.push(`products/${product.title}`);
   };
+
   return (
     <ProductStyles onClick={handleClick} view={view}>
       <ImageContainer>
-        {" "}
         <img src={product.imageURL} alt="product" />
       </ImageContainer>
 
       <Content>
         <Title>{product.title}</Title>
         <Pricing>
-          <span>$16.48</span> <span>${product.price}</span>
+          <span>$16.48</span> <span>${product.price}.99</span>
         </Pricing>
         <Rating>
           <Stars>
@@ -140,7 +146,9 @@ export function Product({ product, view }: ProductProps) {
           </Stars>
           <Review> 10 Reviews</Review>
         </Rating>
-        {view === "list" && <Description>{product.description}</Description>}
+        {view === "list" && (
+          <Description>{product.description.slice(0, 150)} ...</Description>
+        )}
       </Content>
     </ProductStyles>
   );

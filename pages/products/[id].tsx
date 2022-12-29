@@ -9,9 +9,5 @@ export default function ProductDetails() {
 
   const { data } = useProduct(router.query.id);
 
-  return (
-    <>
-      <Layout>{data && <ProductInfo data={data} />}</Layout>
-    </>
-  );
+  return <>{data && <ProductInfo data={data} />}</>;
 }
